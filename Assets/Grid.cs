@@ -9,6 +9,8 @@ public class Grid : MonoBehaviour {
 
     public LayerMask wallMask;          //objetos nesta layer serao considerados como obstaculos
 
+    public bool allowDiagonal;          //booleano que determina se eh possivel fazer movimentos na diagonal
+
     public List<Node> finalPath;        //caminho entre o noh de inicio e o de fim
 
     public Node[,] nodeArray;           //grid 2d formado por nos
@@ -100,6 +102,41 @@ public class Grid : MonoBehaviour {
 
         if (CheckGridBorders(x, y))
             neighborList.Add(nodeArray[x, y]);
+
+        if (allowDiagonal) {
+
+            //checa o vizinho superior direito
+            x = node.gridX + 1;
+
+            y = node.gridY + 1;
+
+            if (CheckGridBorders(x, y))
+                neighborList.Add(nodeArray[x, y]);
+
+            //checa o vizinho superior esquerdo
+            x = node.gridX - 1;
+
+            y = node.gridY + 1;
+
+            if (CheckGridBorders(x, y))
+                neighborList.Add(nodeArray[x, y]);
+
+            //checa o vizinho inferior direito
+            x = node.gridX + 1;
+
+            y = node.gridY - 1;
+
+            if (CheckGridBorders(x, y))
+                neighborList.Add(nodeArray[x, y]);
+
+            //checa o vizinho inferior esquerdo
+            x = node.gridX - 1;
+
+            y = node.gridY - 1;
+
+            if (CheckGridBorders(x, y))
+                neighborList.Add(nodeArray[x, y]);
+        }
 
         return neighborList;
     }
